@@ -1,0 +1,33 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0
+#
+# Apply unicode notation for STARTCHAR entries in BDF files.
+
+set -e
+
+for f in $@
+do
+	awk '
+		FNR == 1 { fn++ }
+
+		fn == 1 && FNR == 1 { FS=";"; $0 = $0 }
+		fn == 2 && FNR == 1 { FS="[ \t]+"; $0 = $0 }
+		# fn == 2 && FNR == 1 { FS="[[:space:]]+"; $0 = $0 }
+
+		fn == 1 {
+			i = strtonum("0x" $1)
+			m[i] = $11 != "" ? $11 : $2
+		}
+
+		fn== 2 && $1 == "STARTCHAR" { next }
+		fn== 2 && $1 == "ENCODING" {
+			if ($2 in m)
+				printf("STARTCHAR %s\n", m[$2])
+			else
+				; # FIXME
+		}
+		fn == 2 { print }
+	' unicode/UnicodeData.txt "$f" >"$f".tmp
+
+	mv "$f".tmp "$f"
+done

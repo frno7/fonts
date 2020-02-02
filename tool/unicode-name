@@ -1,0 +1,5 @@
+#!/usr/bin/gawk -f
+
+BEGIN { FS=";" }
+
+{ printf("%s %c %s\n", $1, strtonum("0x" $1), $2) }
