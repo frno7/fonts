@@ -1,0 +1,4 @@
+#!/bin/sh
+
+awk '$1 == "FONT_ASCENT" { $2-- } { print }' <"$1" |
+    fonttosfnt -b -g 2 -m 2 -o "$2"
