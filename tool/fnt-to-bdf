@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+# The fnt command is part of the Gemini package:
+# https://github.com/frno7/gemini
+fnt --format bdf "$1" |
+    awk '($1 == "FAMILY_NAME" ||
+          $1 == "FACE_NAME") &&
+          $3 == "system" &&
+          $4 == "font\"" {
+            sub(/ "/, " \"Atari ST ")
+            sub(/ font"/, "\"")
+        } { print }' >"$2".tmp
+mv "$2".tmp "$2"
