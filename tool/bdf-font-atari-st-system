@@ -1,0 +1,6 @@
+#!/bin/bash
+
+exec sed -e '/^FONT /s/\([0-9]\+x[0-9]\+\) system font/atari st system/' \
+         -e '/^FONT /s/-misc-/-atari-/' \
+         -e '/^FOUNDRY /s/misc/Atari/' \
+         -e '/^FAMILY_NAME /s/\([0-9]\+x[0-9]\+\) system font/Atari ST \1 system/' \

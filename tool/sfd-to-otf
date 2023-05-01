@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+fontforge -quiet -lang ff -c 'Open("'"$1"'"); Generate("'"$2"'")'

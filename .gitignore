@@ -1,2 +1,5 @@
+*.otb
+*.otf
 *.pcf
 *.pcf.gz
+*.sfd

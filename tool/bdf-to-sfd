@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+name=$(awk '$1 == "FAMILY_NAME" {
+		sub(/^[^"]+"/, "")
+		sub(/"$/, "")
+		print
+	}' "$1")
+
+overlap_sfd=${2%.sfd}-overlap.sfd
+
+bdf2sfd -f "$name" -p ${name// /} "$1" >"$overlap_sfd"
+fontforge -quiet -lang ff -c 'Open("'"$overlap_sfd"'"); SelectAll(); RemoveOverlap(); Simplify(-1, 1); Save("'"$2"'")'
+rm "$overlap_sfd"
