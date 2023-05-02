@@ -1,4 +1,35 @@
-## Atari ST system fonts
+  [Lucir fonts](#lucir-fonts)
+· [Atari ST system fonts](#atari-st-system-fonts)
+
+### Lucir fonts
+
+Lucir is a derivative of [Lucida Sans Typewriter][lucida] in a 6 × 11 pixel
+size. The package [`media-fonts/lucir`][media-fonts/lucir] is available for
+[Gentoo Linux](https://www.gentoo.org/).
+[`lucir/lucir-6x11-linux-kernel-console.patch`][lucir-linux] is a patch
+for Lucir as a Linux kernel console font.
+
+The `Makefile` can produce [PCF][pcf] and [OpenType][opentype],
+both bitmap (OTB) and scalable (OTF) variants. [XLFD][XLFD] font names and
+aliases:
+
+```
+lucir-6x11-medium  -misc-lucir-medium-r-normal--11-110-72-72-C-60-ISO10646-1
+lucir-6x11-bold    -misc-lucir-bold-r-normal--11-110-72-72-C-60-ISO10646-1
+```
+
+The Lucir fonts rendered as images:
+
+![Lucir 6x11 medium](https://raw.githubusercontent.com/frno7/font/main/lucir/lucir-6x11-medium.png)
+
+![Lucir 6x11 bold](https://raw.githubusercontent.com/frno7/font/main/lucir/lucir-6x11-bold.png)
+
+[lucida]: https://en.wikipedia.org/wiki/Lucida_Sans_Typewriter
+[media-fonts/lucir]: https://github.com/frno7/gentoo.overlay/tree/master/media-fonts/lucir
+[lucir-linux]: https://github.com/frno7/font/tree/main/lucir/lucir-6x11-linux-kernel-console.patch
+
+
+### Atari ST system fonts
 
 The package [`media-fonts/atari-st-system`][media-fonts/atari-st-system]
 is available for [Gentoo Linux](https://www.gentoo.org/). The [BDF][bdf] files

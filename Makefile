@@ -51,13 +51,17 @@ LUCIR :=lucir/lucir-6x11-medium.bdf					\
 	lucir/lucir-6x11-bold.bdf
 
 .PHONY: lucir
-lucir:	$(LUCIR:%.bdf=%.otf)						\
-	$(LUCIR:%.bdf=%.otb)						\
-	$(LUCIR:%.bdf=%.pcf.gz)
+lucir: lucir_png lucir_otb lucir_otf lucir_pcf
+
+.PHONY: lucir_png lucir_otb lucir_otf lucir_pcf
+lucir_png: $(LUCIR:%.bdf=%.png)
+lucir_otb: $(LUCIR:%.bdf=%.otb)
+lucir_otf: $(LUCIR:%.bdf=%.otf)
+lucir_pcf: $(LUCIR:%.bdf=%.pcf.gz)
 
 .PHONY: clean
 clean:
-	$(QUIET_RM)$(RM) -f */*.pcf */*.pcf.gz */*.otb atari/*.otf */*.sfd
+	$(QUIET_RM)$(RM) -f */*.pcf */*.pcf.gz */*.otb */*.otf */*.png */*.sfd
 
 GZIP := gzip
 BDFTOPCF := bdftopcf
