@@ -1,0 +1,21 @@
+#!/usr/bin/awk -f
+
+$1 == "ENDCHAR" { b = 0 }
+
+b {
+	s = ""
+	m = strtonum("0x" $1)
+	for (i = 0; i < w; i++)
+		s = s (and(rshift(m, 7 - i), 1) ? "#" : ".")
+	print s
+	next
+}
+
+$1 == "BBX" {
+	w = $2
+	h = $3
+}
+
+$1 == "BITMAP" { b = 1 }
+
+{ print }

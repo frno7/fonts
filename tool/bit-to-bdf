@@ -1,0 +1,45 @@
+#!/usr/bin/awk -f
+
+$1 == "CHARS" { n = $2 }
+
+$1 == "STARTCHAR" { k++ }
+
+$1 == "ENDCHAR" {
+	if (r != h) {
+		print "Malformed bitmap height" > "/dev/stderr"
+		exit 1
+	}
+	b = 0
+}
+
+b {
+	if (length($1) != w) {
+		print "Malformed bitmap width" > "/dev/stderr"
+		exit 1
+	}
+
+	m = 0
+	for (i = 0; i < w; i++)
+		m += substr($0, 1+i, 1) == "#" ? lshift(1, 7 - i) : 0
+	printf("%02X\n", m)
+	r++
+	next
+}
+
+$1 == "BBX" {
+	w = $2
+	h = $3
+	r = 0
+	c = 0
+}
+
+$1 == "BITMAP" { b = 1 }
+
+{ print }
+
+END {
+	if (k != n) {
+		print "CHARS " n " != " k > "/dev/stderr"
+		exit 1
+	}
+}
