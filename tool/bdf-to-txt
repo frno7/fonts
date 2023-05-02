@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+awk '	$1 == "FONT" {
+		font = $0
+		sub(/^[^ ]+ /, "", font)
+	}
+	$1 == "ENCODING" { if (int($2)) m[int($2)] = 1 }
+	$1 == "FOUNDRY" && $2 == "\"Atari\"" {
+		s = " ⌠ \n" \
+		    "   ⌡ "
+
+	}
+	END {
+		print font
+		print ""
+		print "ABCDEFGHIJKLMNOPQRSTUVWXYZ    The quick brown fox jumps over the lazy dog."
+		print "abcdefghijklmnopqrstuvwxyz"
+		print "0123456789 () {} [] <> @ $    [n | n <- [2..], product [1..n-1] `rem` n == n-1]"
+		print "~ # % ^ & + - * / | \\ =.!?"
+		print "\x27 ` ´ \" : ; _ Illegal1 0Oo    #include <stdio.h> int main() { puts(\"Hello!\"); }"
+		print ""
+
+		if (s)
+			print s "\n"
+
+		PROCINFO["sorted_in"] = "@ind_num_asc"
+
+		i = 0
+		for (c in m) {
+			printf("%s%c", i % 40 == 0 ? "" : " ", int(c))
+
+			if (++i % 40 == 0)
+				printf("\n")
+		}
+
+		print ""
+	}' "$1"

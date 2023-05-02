@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+tool/bdf-to-txt "$1" |
+	pbmtext -wchar -font "$1" |
+	ppmchange white '#f8f8f8' |
+	ppmchange black '#080808' |
+	pnmtopng -compression=9 >"$2"

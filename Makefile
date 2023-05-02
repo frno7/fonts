@@ -31,14 +31,18 @@ ifeq (1,$(HAVE_FNT))
 atari_bdf: $(ATARI:%.fnt=%.bdf)
 endif
 
+%.png : %.bdf
+	$(QUIET_BDFTOPNG)$(BDFTOPNG) $^ $@
+
 ATARI := atari/atari-st-system-6x6.fnt					\
 	 atari/atari-st-system-8x8.fnt					\
 	 atari/atari-st-system-8x16.fnt
 
 .PHONY: atari
-atari: atari_otb atari_otf atari_pcf
+atari: atari_png atari_otb atari_otf atari_pcf
 
-.PHONY: atari_otb atari_otf atari_pcf
+.PHONY: atari_png atari_otb atari_otf atari_pcf
+atari_png: $(ATARI:%.fnt=%.png)
 atari_otb: $(ATARI:%.fnt=%.otb)
 atari_otf: $(ATARI:%.fnt=%.otf)
 atari_pcf: $(ATARI:%.fnt=%.pcf.gz)
@@ -57,6 +61,7 @@ clean:
 
 GZIP := gzip
 BDFTOPCF := bdftopcf
+BDFTOPNG := tool/bdf-to-png
 BDFTOSFD := tool/bdf-to-sfd
 BDFTOOTB := tool/bdf-to-otb
 SFDTOOTF := tool/sfd-to-otf
@@ -68,6 +73,7 @@ QUIET_RM       = $(Q:@=@echo    '  RM       '$@;)
 QUIET_GZIP     = $(Q:@=@echo    '  GZIP     '$@;)
 QUIET_FNTTOBDF = $(Q:@=@echo    '  FNTTOBDF '$@;)
 QUIET_BDFTOPCF = $(Q:@=@echo    '  BDFTOPCF '$@;)
+QUIET_BDFTOPNG = $(Q:@=@echo    '  BDFTOPNG '$@;)
 QUIET_BDFTOOTB = $(Q:@=@echo    '  BDFTOOTB '$@;)
 QUIET_BDFTOSFD = $(Q:@=@echo    '  BDFTOSFD '$@;)
 QUIET_SFDTOOTF = $(Q:@=@echo    '  SFDTOOTF '$@;)
